@@ -14,9 +14,22 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### Objectives
 
+
 ### Timeline
 
+Day 1
+  * Introduction and Objectives
+  * Explore 3 Data Cleaning Topics
+  * Summary, Resources, Quiz
+  
+Day 2
+  - Quick Review and Q&A
+  - Explore 3 Advanced Cleaning Topics
+  - Summary, Resources, Quiz
+
 ### Getting Set Up
+
+*All of the functions will be able to run in this tutorial without opening RStudio.  When you have finished the tutorial, you will want to try some of these techniques on your own data.  The functions we run for this tutorial are supported by the tidyr and dplyr packages.  Install and load these packages before tidying your own data.*
 
 
 ## Day One: Pivoting Your Data
@@ -31,7 +44,15 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### Resources
 
+Data Wrangling Cheat Sheet
+
+![](data-wrangling-cheatsheet.pdf)
+
 ### Follow-up Videos
+
+![](https://www.youtube.com/watch?v=jOd65mR1zfw)
+
+![](https://www.youtube.com/watch?v=1ELALQlO-yM)
 
 ### Quiz
 
@@ -48,5 +69,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ### Resources
 
 ### Follow-up Videos
+
+![](https://www.youtube.com/watch?v=Zc_ufg4uW4U)
 
 ### Quiz
