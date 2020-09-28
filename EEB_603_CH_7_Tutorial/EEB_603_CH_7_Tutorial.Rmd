@@ -6,6 +6,7 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(knitr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -13,6 +14,8 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Before You Start
 
 ### Objectives
+
+Students will 
 
 
 ### Timeline
@@ -40,9 +43,15 @@ Day 2
 
 ## Day One: Pivoting Your Data
 
+
+
 ## Day One: Summarizing Data
 
+
+
 ## Day One: Dealing with NA's
+
+
 
 ## Day One: Summary and Quiz
 
@@ -52,11 +61,7 @@ Day 2
 
 Data Wrangling Cheat Sheet
 
-```{r cheatsheet, out.width="100%", out.height="500"}
-
-knitr::include_graphics('www/data_wrangling_cheatsheet.pdf')
-
-```
+https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
 
 ### Follow-up Videos
 
@@ -65,6 +70,46 @@ knitr::include_graphics('www/data_wrangling_cheatsheet.pdf')
 ![](https://www.youtube.com/watch?v=1ELALQlO-yM)
 
 ### Quiz
+
+#You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
+
+Some questions to verify that you understand how to manipulate basic data.
+
+```{r quiz}
+quiz(
+  question("Which format is your data in when the columns are variables and the rows are observations?",
+    answer("short"),
+    answer("wide"),
+    answer("long", correct = TRUE),
+    answer("tall")
+  ),
+  question("Which function helps to convert data from wide to long format  by when the user identifies a key and value?",
+    answer("gather", correct = TRUE),
+    answer("spread"),
+    answer("transpose"),
+    answer("reshape")
+  ),
+   question("Which command gives the basic descriptive stats and types for all the variables in a dataframe?",
+    answer("summary", correct = TRUE),
+    answer("summarize"),
+    answer("stats"),
+    answer("grid")
+  ),
+   question("Which command would denote including data that is not missing?",
+    answer("!is.na", correct = TRUE),
+    answer("!"),
+    answer("is.na"),
+    answer("na", correct = TRUE)
+  ),
+   question("Which of the R packages listed below are used to help tidy data?",
+    answer("tidyr", correct = TRUE),
+    answer("learnr"),
+    answer("ggplot2"),
+    answer("tidyverse", correct = TRUE)
+  )
+  
+)
+```
 
 ## Day Two: Merging Data
 
