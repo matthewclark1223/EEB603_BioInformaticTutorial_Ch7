@@ -18,14 +18,20 @@ knitr::opts_chunk$set(echo = FALSE)
 ### Timeline
 
 Day 1
+
   * Introduction and Objectives
+  
   * Explore 3 Data Cleaning Topics
+  
   * Summary, Resources, Quiz
   
 Day 2
-  - Quick Review and Q&A
-  - Explore 3 Advanced Cleaning Topics
-  - Summary, Resources, Quiz
+
+  * Quick Review and Q&A
+  
+  * Explore 3 Advanced Cleaning Topics
+  
+  * Summary, Resources, Quiz
 
 ### Getting Set Up
 
@@ -46,7 +52,11 @@ Day 2
 
 Data Wrangling Cheat Sheet
 
-![](data-wrangling-cheatsheet.pdf)
+```{r cheatsheet, out.width="100%", out.height="500"}
+
+knitr::include_graphics('www/data_wrangling_cheatsheet.pdf')
+
+```
 
 ### Follow-up Videos
 
