@@ -71,9 +71,9 @@ https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
 
 ### Quiz
 
-#You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
+*This quiz is not for a grade, but a helpful guide to what you know and things you might brush up on.*
 
-Some questions to verify that you understand how to manipulate basic data.
+Quiz over Day 1 topics.
 
 ```{r quiz}
 quiz(
