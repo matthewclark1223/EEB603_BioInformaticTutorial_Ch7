@@ -7,6 +7,7 @@ runtime: shiny_prerendered
 ```{r setup, include=FALSE}
 library(learnr)
 library(knitr)
+library(tidyverse)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -112,6 +113,73 @@ quiz(
 ```
 
 ## Day Two: Merging Data
+
+Imagine you are the regional manager of Winco in Idaho. One thing you might want to do is combine the data from Boise and Idaho Falls. Let's start with data on how many customers visited each location, on each day in 2020. 
+
+### Examine each dataset
+Start by looking at the Boise location and examine the dimensions.
+
+```{r Win1, message=FALSE, warning=FALSE}
+Winco1<-read.csv("./Messy_CSVs/MergeData/WincoMerge1.csv")[,-1]
+```
+
+```{r win1L, exercise=TRUE}
+#Examine the Boise data set
+head(Winco1)
+```
+
+Then look at the Idaho Falls location and examine the dimensions of that dataset too
+
+```{r Win2, message=FALSE, warning=FALSE}
+Winco2<-read.csv("./Messy_CSVs/MergeData/WincoMerge2.csv")[,-1]
+```
+
+```{r Win2L, exercise=TRUE}
+#Examine the Idaho Falls data set
+head(Winco2)
+```
+
+### Merge with `rbind`
+We can see that these two datasets have the same number of columns and the same column names. This is the most simple way to merge data.
+
+We can stack these two datasets on top of eachother using the `rbind` command.
+```{r rbindreal, message=FALSE, warning=FALSE}
+allWinDat<- rbind(Winco1,Winco2)
+```
+
+```{r WinComb1, exercise=TRUE}
+allWinDat<- rbind(Winco1,Winco2)
+
+#examine the head and tail to make sure it worked
+
+head(allWinDat,n=3) #first three rows
+tail(allWinDat,n=3) #last three rows
+```
+
+### Merge with `merge`
+
+Now imagine that we get another dataset which contains the financial data for each location on each day. Let's first look at it. 
+
+```{r Win3, message=FALSE, warning=FALSE}
+Winco3<-read.csv("./Messy_CSVs/MergeData/WincoMerge3.csv")[,-1]
+```
+
+```{r win3L, exercise=TRUE}
+#Examine the Boise data set
+head(Winco3)
+```
+
+Notice that this data has the same dates and locations as the dataset we just created using `rbind`. We will want to merge the data we just created with this new dataset and make sure that the rows are all in the right place. We can do that with the `merge` command.
+
+```{r winMerge, exercise=TRUE}
+WincoFull<-merge(allWinDat,Winco3, by=c("Date","Location"))
+
+#check it out to make sure it worked
+
+head(WincoFull,n=10) #first 10 rows
+```
+
+Awesome! We got out datasets all merged!
 
 ## Day Two: Dates
 
