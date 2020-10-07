@@ -73,7 +73,6 @@ https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
 
 *This quiz is not for a grade, but a helpful guide to what you know and things you might brush up on.*
 
-Quiz over Day 1 topics.
 
 ```{r quiz}
 quiz(
@@ -128,3 +127,12 @@ quiz(
 ![](https://www.youtube.com/watch?v=Zc_ufg4uW4U)
 
 ### Quiz
+
+
+## Session Information
+```{r sessioninfo, echo=FALSE}
+
+sessionInfo()
+
+```
+
