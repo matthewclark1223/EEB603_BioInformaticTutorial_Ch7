@@ -9,6 +9,7 @@ library(learnr)
 library(knitr)
 library(tidyverse)
 library(lubridate)
+library(readr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -193,7 +194,7 @@ As graduate students, we all know that Boise State does not provide us with dent
 The only downside is that you made this dataset before you learned about recording tidy data. Let's check it out.
 
 ```{r brush1, message=FALSE, warning=FALSE}
-Brush<-read.csv("./Messy_CSVs/ToothBrushingData_Dates_Times.csv")[,-1]
+Brush<-read_csv("./Messy_CSVs/ToothBrushingData_Dates_Times.csv")[,-1]
 ```
 
 ```{r brush2, exercise=TRUE}
@@ -257,7 +258,59 @@ as_date(47894)
 **Important** Excel and Google Sheets actually do the same thing, but they start at 1900-01-01. For this reason, you need to be VERY careful when converting dates from R to Excel/Google Sheets and vie versa. 
 
 ## Day Two: Times
+To get to the bottom of our tooth brushing problem, we're going to have to do some math with the times. Let's look at the data again.
 
+```{r brush9, exercise = TRUE}
+Brush
+```
+
+Times are stored in R as the number of seconds since 00:00:00
+
+Let's explore that with the `hms` function in `lubridate`
+
+* h = hours
+* m = mins
+* s = seconds
+
+```{r brush10, exercise=TRUE}
+t <- hms::as_hms(85) 
+t
+```
+
+We can do the same thing with our Brush data. Let's see if it can check how long each observation is from 00:00:00
+
+```{r brush11, exercise = TRUE}
+hms(Brush$StartBrush)
+
+```
+
+
+Now imagine that we made a mistake and these times were all recored in PM. We can convert these with the `parse_date_time` function again. We will use a different syntax this time though.
+
+Here, we'll tell lubridate how we are storing our time data as follows:
+
+* %I: Hours as decimal number (01–12 or 1–12).
+* %M: Minute as decimal number (00–59 or 0–59).
+* %S: Second as decimal number (00–61 or 0–61).
+* %P: AM/PM indicator in the locale. 
+
+```{r brush12, exercise = TRUE}
+t<-paste(Brush$StartBrush, "PM") #we need to add PM onto our times
+parse_time(t, '%I:%M:%S %p')  #now we can read them as pm times
+
+```
+
+Lastly, let's add on the total time that we brushed our teach in each observation. We can do this in seconds only or in hms format.
+
+```{r brush13, exercise = TRUE, warning=FALSE, message=FALSE}
+Brush$totalTime1<-Brush$EndBrush-Brush$StartBrush
+Brush
+```
+
+```{r brush14, exercise = TRUE, warning=FALSE, message=FALSE}
+Brush$totalTime1<-hms(Brush$EndBrush)-hms(Brush$StartBrush)
+Brush
+```
 
 ## Day Two: Summary and Quiz
 
