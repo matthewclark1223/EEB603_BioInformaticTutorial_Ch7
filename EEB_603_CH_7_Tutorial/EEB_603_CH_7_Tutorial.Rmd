@@ -8,6 +8,7 @@ runtime: shiny_prerendered
 library(learnr)
 library(knitr)
 library(tidyverse)
+library(lubridate)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -125,7 +126,8 @@ Winco1<-read.csv("./Messy_CSVs/MergeData/WincoMerge1.csv")[,-1]
 
 ```{r win1L, exercise=TRUE}
 #Examine the Boise data set
-head(Winco1)
+dim(Winco1) #look at the dimensions
+head(Winco1) #look at the first 6 rows
 ```
 
 Then look at the Idaho Falls location and examine the dimensions of that dataset too
@@ -136,19 +138,22 @@ Winco2<-read.csv("./Messy_CSVs/MergeData/WincoMerge2.csv")[,-1]
 
 ```{r Win2L, exercise=TRUE}
 #Examine the Idaho Falls data set
-head(Winco2)
+dim(Winco2) #look at the dimensions
+head(Winco2) #look at the first 6 rows
 ```
 
 ### Merge with `rbind`
 We can see that these two datasets have the same number of columns and the same column names. This is the most simple way to merge data.
 
-We can stack these two datasets on top of eachother using the `rbind` command.
+We can stack these two datasets on top of each other using the `rbind` command.
 ```{r rbindreal, message=FALSE, warning=FALSE}
 allWinDat<- rbind(Winco1,Winco2)
 ```
 
 ```{r WinComb1, exercise=TRUE}
 allWinDat<- rbind(Winco1,Winco2)
+
+dim(allWinDat) #look at the dimensions
 
 #examine the head and tail to make sure it worked
 
@@ -166,7 +171,8 @@ Winco3<-read.csv("./Messy_CSVs/MergeData/WincoMerge3.csv")[,-1]
 
 ```{r win3L, exercise=TRUE}
 #Examine the Boise data set
-head(Winco3)
+dim(Winco3) #look at the dimensions
+head(Winco3) #look at the first 6 rows
 ```
 
 Notice that this data has the same dates and locations as the dataset we just created using `rbind`. We will want to merge the data we just created with this new dataset and make sure that the rows are all in the right place. We can do that with the `merge` command.
@@ -175,15 +181,83 @@ Notice that this data has the same dates and locations as the dataset we just cr
 WincoFull<-merge(allWinDat,Winco3, by=c("Date","Location"))
 
 #check it out to make sure it worked
-
+dim(WincoFull) #check out the dimensions
 head(WincoFull,n=10) #first 10 rows
 ```
 
 Awesome! We got out datasets all merged!
 
 ## Day Two: Dates
+As graduate students, we all know that Boise State does not provide us with dental coverage. Being the quantitative, calculated genius you are, you decide to start tracking when and for how long you brush your teeth. You plan to use this to find the optimum brush time and never get a cavity again!
+
+The only downside is that you made this dataset before you learned about recording tidy data. Let's check it out.
+
+```{r brush1, message=FALSE, warning=FALSE}
+Brush<-read.csv("./Messy_CSVs/ToothBrushingData_Dates_Times.csv")[,-1]
+```
+
+```{r brush2, exercise=TRUE}
+Brush
+```
+
+### Dates with `lubridate`
+
+The `lubridate` package in R has a **ton** of useful functions for dealing with dates and times. The ones we will use here are the various `dmy`, `mdy`, `ydm`, etc... functions.
+
+These functions take vectors of dates that are organized in an order that corresponds to the function letter order:
+
+* d = day
+* m = month
+* y = year
+
+Here's an example
+```{r brush3, exercise=TRUE}
+x<-"10-31-2020" #lets add a date with month-day-year order
+lubridate::mdy(x)
+```
+Now let's try it with our ugly date vector
+
+```{r brush4, exercise=TRUE}
+lubridate::dmy(Brush$Date)
+```
+
+Awesome! That was easy!
+
+### The Ugliest Dates of Them All
+
+The most difficult date data to deal with is heterogeneous date data.
+
+Take the following date vector
+
+```{r brush5, exercise=TRUE}
+x <- c("4th of July 1999", "1999/4/7", "4-1999-7")
+x
+```
+
+That's pretty bad. But, we can deal with it easily with `lubridate`.
+We will use the `parse_date_time` function. This function allows us to input the various date formats as a vector. Let's try it out.
+
+```{r brush6, exercise=TRUE}
+x <- c("4th of July 1999", "1999/4/7", "4-1999-7")
+parse_date_time(x, c("dmy","ydm","dym")) 
+```
+
+### How R thinks about dates
+Days in R are stored as the number of days since 1970-01-01
+
+We can explore this with the `as_date` function
+```{r brush7, exercise=TRUE}
+as_date(1)
+```
+
+```{r brush8, exercise=TRUE}
+as_date(47894)
+```
+
+**Important** Excel and Google Sheets actually do the same thing, but they start at 1900-01-01. For this reason, you need to be VERY careful when converting dates from R to Excel/Google Sheets and vie versa. 
 
 ## Day Two: Times
+
 
 ## Day Two: Summary and Quiz
 
