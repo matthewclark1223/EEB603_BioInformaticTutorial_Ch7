@@ -45,6 +45,28 @@ Day 2
 
 
 ## Day One: Pivoting Your Data
+Imagine your friend in a much cooler Biology department does some awesome research on cheetahs and what characteristics make them so super fast! They want to make you a co-author on this great cheetah paper if you can just make sense of the data. They send you the data and you decide to take a look.
+
+```{r Cheetah1, message=FALSE, warning=FALSE}
+CheetahLong<-read.csv("./Messy_CSVs/Cheetas_long.csv")[,-1]
+```
+
+```{r Cheetah2, exercise=TRUE}
+#Examine the data
+dim(CheetahLong) #look at the dimensions
+CheetahLong[sample(1:400,10),] #look at 10 rows at random
+```
+
+We can see that the data is in long format, where there are different variables all mashed together in a `value` column and the identity of those variables is in the adjacent `measurement` column. This kind of data is really difficult to do statistics on or plot. 
+
+Let's check out the different measurements
+
+```{r Cheetah3, exercise=TRUE}
+unique(CheetahLong$Measurement)
+```
+
+We want to make the data into wide format where `NumberSpots`, `MaxSpeed`, `Birthday`, and `CelebratesBirthday` each get their own column.
+
 
 
 
@@ -54,7 +76,23 @@ Day 2
 
 ## Day One: Dealing with NA's
 
+Let's imagine that you're helping the health center out with some COVID-19 data analysis. They send you the data and you check it out.
+```{r Covid1, message=FALSE, warning=FALSE}
+CovDat<-read.csv("./Messy_CSVs/COVID_NAs.csv")[,-1]
+```
 
+
+```{r Covid2, exercise=TRUE}
+#Examine the data set
+dim(CovDat) #look at the dimensions
+CovDat #scroll through
+```
+
+What do you notice by looking through the data?
+
+We can see a variety of different ways they have stored NAs!
+
+It look like there's: NA, nan and -999
 
 ## Day One: Summary and Quiz
 
