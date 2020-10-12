@@ -73,9 +73,9 @@ We want to make the data into wide format where `NumberSpots`, `MaxSpeed`, `Birt
 
 ## Day One: Summarizing Data
 
-This section will help you practice some of the basic commands to get summary information about your data.  You will also learn how to subset data in order to get summary information on more manageable pieces of data.
+This section will help you practice some of the basic commands to get summary information about your data.  You will also learn how to subset data in order to summary information on more manageable pieces of data.
 
-The following dataset shows some life history information on 330 zoo animal species found in North American zoos (Che-Castaldo et al. 2019)
+The following dataset shows some life history information on 330 zoo animals species found in North American zoos (Che-Castaldo et al. 2019
 
 
 ```{r zoo1, message=FALSE, warning=FALSE}
@@ -104,7 +104,8 @@ Sometimes it is helpful use the previous functions to put the dataset into conte
 So now that you see the dimensions and a glimpse at the start and end of the data, lets use some others.  In this next set, you get to practice with the code!
 
 ```{r zoo3, exercise=TRUE}
-#Look at the structure of the data (zoo).  Run the chunk to see the output.  Press the hint button if needed.
+#Look at the structure of the data (zoo).  Run the chunk to see the output.
+
 
 ```
 :::{#zoo3-hint}
@@ -133,7 +134,10 @@ Filtering the data will allow you to combine and exclude columns if you need to 
 
 Notice that the ID column and Sample column have parts of one unique sample identifier.  Lets unite these two columns and give the column a new name "Sample ID".
 
-We can also pull just the mean life expecancy data out by excluding the columns we don't want to see.
+We can also pull just the mean life expectancy data out by excluding the columns we don't want to see.
+
+Filtering the data will allow you to combine columns and exclude columns, if you need to tidy your data to be more refined.  In this next section we will combine two columns using "unite" and we will exclude data using "-".
+
 
 ```{r zoo6, exercise=TRUE}
 #Filtering the data lets combine ID and Sample using the unite function.
@@ -160,9 +164,9 @@ zoo2 <- zoo %>%
 ```
 
 ```{r zoo7, exercise=TRUE}
-zoo2%>% arrange(TaxonClass)
+zoo2 %>% arrange(TaxonClass)
 
-
+#Output the summary of zoo to see how the data are arranged.
 ```
 
 :::{#zoo7-hint}
@@ -180,7 +184,7 @@ zoo2 <- zoo %>%
 ```{r zoo8, exercise=TRUE}
 # use the arrange function with TaxonClass and Overall.MLE
 
-
+# show the summary output for zoo2
 
 ```
 
@@ -189,7 +193,7 @@ zoo2 <- zoo %>%
 summary(zoo2)
 :::
 
-Do you notice how the data is arranged now, ascending or descendin? 
+Do you notice how the data is arranged now, ascending or descending? 
 
 Let's change the order from ascending MLE to descending using the - sign in front of Overall.MLE.
 
@@ -198,6 +202,8 @@ zoo2 <- zoo %>%
   unite(Sample_ID, ID, Sample, sep="_") %>%
   select(-7:-18)
 ```
+
+Lets change the order from ascending MLE to descending using the - sign in front of Overall.MLE
 
 ```{r zoo9, exercise=TRUE}
 
@@ -209,6 +215,7 @@ summary(zoo2)
 :::
 
 Great Job!  Now you can summarize, sort, and filter your data into a nice tidy package!
+
 
 ## Day One: Dealing with NA's
 
