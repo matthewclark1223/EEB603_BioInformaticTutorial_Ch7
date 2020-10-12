@@ -275,15 +275,110 @@ We can see a variety of different ways they have stored NAs!
 
 It look like there's: NA, nan and -999
 
-## Day One: Summary and Quiz
+Another way to identify missing data is using is.na(data).  Try this out with our CovDat below.
 
-### Recap
+```{r covid3, exercise=TRUE}
+
+
+```
+:::{#covid3-hint}
+**Hint:** is.na(CovDat)
+:::
+
+Missing data can be represented by:
+
+  * NA = not available (labeled as missing data)
+  * nan = not a number (impossible value)
+  * -999 = missing data (impossible value)
+ 
+Sometimes the missing data isn't labeled as missing (na), it might just be absent.  This is called implicitly missing.
+  
+```{r covid4, exercise=TRUE}
+#Let's replace the -999 with NA in our data set, type in the code below and see how it works.
+
+#CovDat[CovDat==-999] <- NA
+#CovDat
+
+
+```
+:::{#covid4-hint}
+**Hint:** CovDat[CovDat==-999] <- NA
+CovDat
+:::
+
+Sometimes missing data can throw a wrench in our analysis.  Use the space below to calculate the mean temperature from the CovDat (leaving NA in).
+
+```{r covid5-setup}
+CovDat[CovDat==-999] <- NA
+```
+
+
+```{r covid5, exercise=TRUE}
+# mean(data$column)
+
+
+```
+:::{#covid5-hint}
+**Hint:** mean(CovDat$Temp)
+:::
+
+What happened?  Let's try again taking care of those missing values.
+
+```{r covid6-setup}
+CovDat[CovDat==-999] <- NA
+```
+
+```{r covid6, exercise=TRUE}
+# add  , na.rm=TRUE to the argument.
+
+
+```
+:::{#covid6-hint}
+**Hint:** mean(CovDat$Temp, na.rm=TRUE)
+:::
+
+If you want to return a list of rows that have complete data you can use the complete.cases() function.  Using ! will return the observations with missing data.
+
+```{r covid7-setup}
+CovDat[CovDat==-999] <- NA
+```
+
+```{r covid7, exercise=TRUE}
+# CovDat[!complete.cases(CovDat),]
+
+#Take some time to type in the code above to see what the output is.
+
+
+```
+:::{#covid7-hint}
+**Hint:** CovDat[!complete.cases(CovDat),]
+CovDat
+:::
+
+We can create an object with no missing data using na.omit().  Try this function in the space below.
+```{r covid8-setup}
+CovDat[CovDat==-999] <- NA
+```
+
+```{r covid8, exercise=TRUE}
+
+
+
+```
+:::{#covid8-hint}
+**Hint:** CovDatComplete <- na.omit(CovDat)
+CovDatComplete
+:::
+
+Remember:  Sometimes pivoting data from long to wide format will reveal implicitly missing data.
+
+## Day One: Summary and Quiz
 
 ### Resources
 
-Data Wrangling Cheat Sheet
+[Tidy Data Practice](https://garrettgman.github.io/tidying/)
 
-https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
+[Data Wrangling Cheat Sheet](https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
 ### Follow-up Videos
 
@@ -473,7 +568,7 @@ as_date(1)
 as_date(47894)
 ```
 
-**Important** Excel and Google Sheets actually do the same thing, but they start at 1900-01-01. For this reason, you need to be VERY careful when converting dates from R to Excel/Google Sheets and vie versa. 
+**Important** Excel and Google Sheets actually do the same thing, but they start at 1900-01-01. For this reason, you need to be VERY careful when converting dates from R to Excel/Google Sheets and vise versa. 
 
 ## Day Two: Times
 To get to the bottom of our tooth brushing problem, we're going to have to do some math with the times. Let's look at the data again.
@@ -532,9 +627,9 @@ Brush
 
 ## Day Two: Summary and Quiz
 
-### Recap
-
 ### Resources
+
+[Data Carpentry Tutorials](https://datacarpentry.org/lessons/#ecology-workshop)
 
 ### Follow-up Videos
 
