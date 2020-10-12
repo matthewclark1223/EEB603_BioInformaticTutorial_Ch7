@@ -630,13 +630,51 @@ Brush
 ### Resources
 
 [Data Carpentry Tutorials](https://datacarpentry.org/lessons/#ecology-workshop)
+[Lubridate Cheat Sheet](https://lubridate.tidyverse.org/)
 
 ### Follow-up Videos
 
 ![](https://www.youtube.com/watch?v=Zc_ufg4uW4U)
 
 ### Quiz
+*This quiz is not for a grade, but a helpful guide to what you know and things you might brush up on.*
 
+
+```{r quiz2}
+quiz(
+  question("Which syntax is correct for merging two dataframes by multiple variables?",
+    answer("merge(data1, data2, by=var1,var2)"),
+    answer("merge(c(data1, data2), (by=var1,var2))"),
+    answer("merge(c(data1, data2), by=var1,var2)" ),
+    answer("merge(data1, data2, by=c(var1,var2))",correct = TRUE)
+  ),
+  question("Which function helps to convert data from wide to long format  by when the user identifies a key and value?",
+    answer("gather", correct = TRUE),
+    answer("spread"),
+    answer("transpose"),
+    answer("reshape")
+  ),
+   question("Which command gives the basic descriptive stats and types for all the variables in a dataframe?",
+    answer("summary", correct = TRUE),
+    answer("summarize"),
+    answer("stats"),
+    answer("grid")
+  ),
+   question("Which command would denote including data that is not missing?",
+    answer("!is.na", correct = TRUE),
+    answer("!"),
+    answer("is.na"),
+    answer("na", correct = TRUE)
+  ),
+   question("Which of the R packages listed below are used to help tidy data?",
+    answer("tidyr", correct = TRUE),
+    answer("learnr"),
+    answer("ggplot2"),
+    answer("tidyverse", correct = TRUE)
+  )
+  
+)
+```
 
 ## Session Information
 ```{r sessioninfo, echo=FALSE}
