@@ -630,6 +630,7 @@ Brush
 ### Resources
 
 [Data Carpentry Tutorials](https://datacarpentry.org/lessons/#ecology-workshop)
+
 [Lubridate Cheat Sheet](https://lubridate.tidyverse.org/)
 
 ### Follow-up Videos
@@ -648,29 +649,29 @@ quiz(
     answer("merge(c(data1, data2), by=var1,var2)" ),
     answer("merge(data1, data2, by=c(var1,var2))",correct = TRUE)
   ),
-  question("Which function helps to convert data from wide to long format  by when the user identifies a key and value?",
-    answer("gather", correct = TRUE),
-    answer("spread"),
-    answer("transpose"),
-    answer("reshape")
+  question("rbind only works to merge two dataframes if they have the same",
+    answer("number of rows"),
+   answer("number of rows AND row names"),
+    answer("number of columns"),
+    answer("number of columns AND column names", correct = TRUE)
   ),
-   question("Which command gives the basic descriptive stats and types for all the variables in a dataframe?",
-    answer("summary", correct = TRUE),
-    answer("summarize"),
-    answer("stats"),
-    answer("grid")
+   question("What is the standard way to record dates in R?",
+    answer("1993-12-23", correct = TRUE),
+    answer("12-23-1993"),
+    answer("23-12-1993"),
+    answer("12/23/1993")
   ),
-   question("Which command would denote including data that is not missing?",
-    answer("!is.na", correct = TRUE),
-    answer("!"),
-    answer("is.na"),
-    answer("na", correct = TRUE)
+   question("Using the `lubridate` package, which function would you use to convert this date to the propper format: 4th of July '99?",
+    answer("ymd()"),
+    answer("dmy()", correct = TRUE),
+    answer("mdy()")
+    
   ),
-   question("Which of the R packages listed below are used to help tidy data?",
-    answer("tidyr", correct = TRUE),
-    answer("learnr"),
-    answer("ggplot2"),
-    answer("tidyverse", correct = TRUE)
+   question("R stores time as a numerical count of?",
+    answer("seconds", correct = TRUE),
+    answer("minutes"),
+    answer("hours"),
+    answer("days")
   )
   
 )
