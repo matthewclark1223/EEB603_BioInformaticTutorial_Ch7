@@ -16,10 +16,26 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Before You Start
 
+Having tidy data is the foundation to doing good, reproducible science.  This tutorial will walk you through a few helpful and general skills to help you create and maintain tidy data.  That being said, the breadth of skills required to be a master of tidying data exceeds the time available for this tutorial.  For this reason, resources are provided at the end of each day to allow individual growth in this domain.  
+
+The Rules of Tidy Data (Wickham & Grolemund 2016):
+
+  1.  Each variable gets its own column
+  
+  2.  Each sample/observation gets its own row
+  
+  3.  Each cell only has one value
+
+
 ### Objectives
 
-Learners will be able to convert data between two formats, long and wide.
-Learners will be able to summarize data in R using 
+Learners will be able to:
+
+  * convert data between two formats, long and wide.
+  * summarize, sort, and filter data using R.
+  * create tidy data that has solutions for missing measurements.
+  * merge data.
+  * format times and dates in datasets.
 
 
 ### Timeline
@@ -64,12 +80,38 @@ Let's check out the different measurements
 
 ```{r Cheetah3, exercise=TRUE}
 unique(CheetahLong$Measurement)
+
 ```
 
 We want to make the data into wide format where `NumberSpots`, `MaxSpeed`, `Birthday`, and `CelebratesBirthday` each get their own column.
 
+For this we can use the spread command, this is the complement to the gather command.  For this you identify the data, key (column with the variables), and the value (column with the value for each key).
+
+For example:  spread (datatable, key, value).  Now you try to write the code to pivot this data from long to wide format with each variable in an independent column.
+
+```{r Cheetah4, exercise=TRUE}
+#Spread CheetahLong, the key is Measurement, and the value is Value.
 
 
+```
+:::{#Cheetah4-hint}
+**Hint:** CheetahWide <- spread(CheetahLong, Measurement, Value)
+CheetahWide
+:::
+
+Great Job!  Now each variable is presented in an independent column.  You can reverse this using the gather command, try it below.
+
+
+```{r Cheetah5-setup}
+CheetahWide <- spread(CheetahLong, Measurement, Value)
+```
+
+```{r Cheetah5, exercise=TRUE}
+
+```
+:::{#Cheetah5-hint}
+**Hint:** gather(CheetahWide, Measurement, Value, 2:5)
+:::
 
 ## Day One: Summarizing Data
 
@@ -129,8 +171,6 @@ So now that you see the dimensions and a glimpse at the start and end of the dat
 :::{#zoo5-hint}
 **Hint:** names(zoo)
 :::
-  
-Filtering the data will allow you to combine and exclude columns if you need to tidy your data to be more refined.  In this next section we will combine two columns using "unite" and we will exclude data using "-".
 
 Notice that the ID column and Sample column have parts of one unique sample identifier.  Lets unite these two columns and give the column a new name "Sample ID".
 
@@ -155,7 +195,7 @@ names(zoo2)
 
 ```
 
-Now we have a unique ID for each observation and we pulled out only the data we were interested in summarizing.  Now lets organize the data by TaxonClass.  This will put all our mammals, birds, and reptiles together so we can compare.
+Now we have a unique ID for each observation and we pulled out only the data we were interested in summarizing.  Now lets organize the data by `TaxonClass`.  This will put all our mammals, birds, and reptiles together so we can compare.
 
 ```{r zoo7-setup}
 zoo2 <- zoo %>%
@@ -195,15 +235,13 @@ summary(zoo2)
 
 Do you notice how the data is arranged now, ascending or descending? 
 
-Let's change the order from ascending MLE to descending using the - sign in front of Overall.MLE.
+Let's change the order from ascending MLE to descending using the - sign in front of `Overall.MLE`.
 
 ```{r zoo9-setup}
 zoo2 <- zoo %>%
   unite(Sample_ID, ID, Sample, sep="_") %>%
   select(-7:-18)
 ```
-
-Lets change the order from ascending MLE to descending using the - sign in front of Overall.MLE
 
 ```{r zoo9, exercise=TRUE}
 
@@ -214,7 +252,7 @@ Lets change the order from ascending MLE to descending using the - sign in front
 summary(zoo2)
 :::
 
-Great Job!  Now you can summarize, sort, and filter your data into a nice tidy package!
+Great Job!  Now you can summarize, sort, and filter your data, these are great skills for tidying your data!
 
 
 ## Day One: Dealing with NA's
@@ -366,7 +404,7 @@ dim(WincoFull) #check out the dimensions
 head(WincoFull,n=10) #first 10 rows
 ```
 
-Awesome! We got out datasets all merged!
+Awesome! We got our datasets all merged!
 
 ## Day Two: Dates
 As graduate students, we all know that Boise State does not provide us with dental coverage. Being the quantitative, calculated genius you are, you decide to start tracking when and for how long you brush your teeth. You plan to use this to find the optimum brush time and never get a cavity again!
