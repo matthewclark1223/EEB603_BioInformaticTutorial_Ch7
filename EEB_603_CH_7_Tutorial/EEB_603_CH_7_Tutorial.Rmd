@@ -18,7 +18,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### Objectives
 
-Students will 
+Learners will be able to convert data between two formats, long and wide.
+Learners will be able to summarize data in R using 
 
 
 ### Timeline
@@ -72,7 +73,142 @@ We want to make the data into wide format where `NumberSpots`, `MaxSpeed`, `Birt
 
 ## Day One: Summarizing Data
 
+This section will help you practice some of the basic commands to get summary information about your data.  You will also learn how to subset data in order to get summary information on more manageable pieces of data.
 
+The following dataset shows some life history information on 330 zoo animal species found in North American zoos (Che-Castaldo et al. 2019)
+
+
+```{r zoo1, message=FALSE, warning=FALSE}
+
+zoo <- read.csv(file = "Messy_CSVs/zoo.csv")
+
+```
+
+First we want to get a handle on this data set.  There are a lot of functions that help us see the data: dim, head, tails, names, str, summary, just to list a few.
+
+```{r zoo2, exercise=TRUE}
+#Examine the data
+
+dim(zoo) #look at the dimensions
+
+#Shows the first 10 rows
+head(zoo)
+
+#shows the last 10 rows
+tail(zoo)
+
+```
+
+Sometimes it is helpful use the previous functions to put the dataset into context, especially if it is not one you created yourself.
+
+So now that you see the dimensions and a glimpse at the start and end of the data, lets use some others.  In this next set, you get to practice with the code!
+
+```{r zoo3, exercise=TRUE}
+#Look at the structure of the data (zoo).  Run the chunk to see the output.  Press the hint button if needed.
+
+```
+:::{#zoo3-hint}
+**Hint:** str(zoo)
+:::
+
+```{r zoo4, exercise=TRUE}
+#Look at the summary of the data (zoo).  How is this different from the structure?
+
+```
+
+:::{#zoo4-hint}
+**Hint:** summary(zoo)
+:::
+
+```{r zoo5, exercise=TRUE}
+#Look at the names of the data (zoo).  See any that could be combined?
+
+```
+
+:::{#zoo5-hint}
+**Hint:** names(zoo)
+:::
+  
+Filtering the data will allow you to combine and exclude columns if you need to tidy your data to be more refined.  In this next section we will combine two columns using "unite" and we will exclude data using "-".
+
+Notice that the ID column and Sample column have parts of one unique sample identifier.  Lets unite these two columns and give the column a new name "Sample ID".
+
+We can also pull just the mean life expecancy data out by excluding the columns we don't want to see.
+
+```{r zoo6, exercise=TRUE}
+#Filtering the data lets combine ID and Sample using the unite function.
+#We can also exclude columns so we can focus on MLE (mean life expectancy), we do this by using the - sign and indicating the column location.
+
+zoo2 <- zoo %>%
+  # new column name, ID and sample column being united, separating the values with an underscore
+  unite(Sample_ID, ID, Sample, sep="_") %>%
+  
+  # excluding columns 7 through 18 using the select function and the - sign
+  select(-7:-18)
+
+#We can use the names functions to see the new column names
+names(zoo2)
+
+```
+
+Now we have a unique ID for each observation and we pulled out only the data we were interested in summarizing.  Now lets organize the data by TaxonClass.  This will put all our mammals, birds, and reptiles together so we can compare.
+
+```{r zoo7-setup}
+zoo2 <- zoo %>%
+  unite(Sample_ID, ID, Sample, sep="_") %>%
+  select(-7:-18)
+```
+
+```{r zoo7, exercise=TRUE}
+zoo2%>% arrange(TaxonClass)
+
+
+```
+
+:::{#zoo7-hint}
+**Hint:** summary(zoo2)
+:::
+
+Now that we have the taxon groups organized, lets arrange the maximum life expectancy within each taxon. (arrange(primary order, secondary order))
+
+```{r zoo8-setup}
+zoo2 <- zoo %>%
+  unite(Sample_ID, ID, Sample, sep="_") %>%
+  select(-7:-18)
+```
+
+```{r zoo8, exercise=TRUE}
+# use the arrange function with TaxonClass and Overall.MLE
+
+
+
+```
+
+:::{#zoo8-hint}
+**Hint:** zoo2 %>% arrange(TaxonClass, Overall.MLE)
+summary(zoo2)
+:::
+
+Do you notice how the data is arranged now, ascending or descendin? 
+
+Let's change the order from ascending MLE to descending using the - sign in front of Overall.MLE.
+
+```{r zoo9-setup}
+zoo2 <- zoo %>%
+  unite(Sample_ID, ID, Sample, sep="_") %>%
+  select(-7:-18)
+```
+
+```{r zoo9, exercise=TRUE}
+
+
+```
+:::{#zoo9-hint}
+**Hint:** zoo2 %>% arrange(TaxonClass, -Overall.MLE)
+summary(zoo2)
+:::
+
+Great Job!  Now you can summarize, sort, and filter your data into a nice tidy package!
 
 ## Day One: Dealing with NA's
 
