@@ -158,7 +158,6 @@ So now that you see the dimensions and a glimpse at the start and end of the dat
 #Look at the summary of the data (zoo).  How is this different from the structure?
 
 ```
-
 :::{#zoo4-hint}
 **Hint:** summary(zoo)
 :::
@@ -208,7 +207,6 @@ zoo2 %>% arrange(TaxonClass)
 
 #Output the summary of zoo to see how the data are arranged.
 ```
-
 :::{#zoo7-hint}
 **Hint:** summary(zoo2)
 :::
@@ -252,6 +250,36 @@ zoo2 <- zoo %>%
 summary(zoo2)
 :::
 
+Now our data is looking good!  
+
+There is one more tool we can use to practice summarizing our data.  We can analyze a subset of data.  We will name a variable zoomeanMLE and we will organize the data by taxon class and find the mean life expectancy for each group of animals.  
+
+Now there is a few pieces of missing data, we will remove these is na.rm=TRUE.  We will use this more in the next section but it will remove NA's and allow us to calculate the mean for each group.
+
+First set your variable and the dataset.
+Then use a pipe, under which you will group the data by TaxonClass using group_by(columnname)
+Lastly, you can summarize the data using summarize(newcolumnname = function(values, na.rm = TRUE))
+```{r zoo10-setup}
+zoo2 <- zoo %>%
+  unite(Sample_ID, ID, Sample, sep="_") %>%
+  select(-7:-18)
+```
+
+```{r zoo10, exercise=TRUE}
+
+
+```
+:::{#zoo10-hint}
+**Hint:** zoomeanMLE <- zoo2 %>%
+    group_by(TaxonClass) %>%
+    summarize(mean_MLE = mean(Overall.MLE, na.rm = TRUE))
+zoomeanMLE
+:::
+
+You might notice there is a NaN for Arachnida, this is because there is only one observation for this class and there is no MLE data for it.  Now we can see that those Chondrichthyes have the longest lifespan in captivity, GO SHARKS!!
+
+Also, note that the group_by() function will override previous groupings and might show a friendly warning message.
+
 Great Job!  Now you can summarize, sort, and filter your data, these are great skills for tidying your data!
 
 
@@ -261,7 +289,6 @@ Let's imagine that you're helping the health center out with some COVID-19 data 
 ```{r Covid1, message=FALSE, warning=FALSE}
 CovDat<-read.csv("./Messy_CSVs/COVID_NAs.csv")[,-1]
 ```
-
 
 ```{r Covid2, exercise=TRUE}
 #Examine the data set
@@ -278,7 +305,6 @@ It look like there's: NA, nan and -999
 Another way to identify missing data is using is.na(data).  Try this out with our CovDat below.
 
 ```{r covid3, exercise=TRUE}
-
 
 ```
 :::{#covid3-hint}
@@ -306,66 +332,82 @@ Sometimes the missing data isn't labeled as missing (na), it might just be absen
 CovDat
 :::
 
-Sometimes missing data can throw a wrench in our analysis.  Use the space below to calculate the mean temperature from the CovDat (leaving NA in).
+Another way to replace missing or unwanted values is using `replace()` 
 
-```{r covid5-setup}
-CovDat[CovDat==-999] <- NA
-```
+For example if df was our data frame and we wanted to replace all the words that said missing with NA.
 
+df <- replace(df, df == "missing", NA)
 
-```{r covid5, exercise=TRUE}
-# mean(data$column)
+Using our CovDat data, replace the characters NaN and values -999 with NA.
 
+```{r covid-5, exercise=TRUE}
 
 ```
 :::{#covid5-hint}
-**Hint:** mean(CovDat$Temp)
+**Hint:** CovDat <- replace(CovDat, CovDat == -999, NA)
+CovDat <- replace(CovDat, CovDat == "NaN", NA)
+CovDat
 :::
 
-What happened?  Let's try again taking care of those missing values.
+Sometimes missing data can throw a wrench in our analysis.  Use the space below to calculate the mean temperature from the CovDat (leaving NA in).
 
 ```{r covid6-setup}
 CovDat[CovDat==-999] <- NA
 ```
 
 ```{r covid6, exercise=TRUE}
-# add  , na.rm=TRUE to the argument.
+# mean(data$column)
 
 
 ```
 :::{#covid6-hint}
-**Hint:** mean(CovDat$Temp, na.rm=TRUE)
+**Hint:** mean(CovDat$Temp)
 :::
 
-If you want to return a list of rows that have complete data you can use the complete.cases() function.  Using ! will return the observations with missing data.
+What happened?  Let's try again taking care of those missing values.
 
 ```{r covid7-setup}
 CovDat[CovDat==-999] <- NA
 ```
 
 ```{r covid7, exercise=TRUE}
+# add  , na.rm=TRUE to the argument.
+
+
+```
+:::{#covid7-hint}
+**Hint:** mean(CovDat$Temp, na.rm=TRUE)
+:::
+
+If you want to return a list of rows that have complete data you can use the complete.cases() function.  Using ! will return the observations with missing data.
+
+```{r covid8-setup}
+CovDat[CovDat==-999] <- NA
+```
+
+```{r covid8, exercise=TRUE}
 # CovDat[!complete.cases(CovDat),]
 
 #Take some time to type in the code above to see what the output is.
 
 
 ```
-:::{#covid7-hint}
+:::{#covid8-hint}
 **Hint:** CovDat[!complete.cases(CovDat),]
 CovDat
 :::
 
 We can create an object with no missing data using na.omit().  Try this function in the space below.
-```{r covid8-setup}
+```{r covid9-setup}
 CovDat[CovDat==-999] <- NA
 ```
 
-```{r covid8, exercise=TRUE}
+```{r covid9, exercise=TRUE}
 
 
 
 ```
-:::{#covid8-hint}
+:::{#covid9-hint}
 **Hint:** CovDatComplete <- na.omit(CovDat)
 CovDatComplete
 :::
@@ -676,6 +718,13 @@ quiz(
   
 )
 ```
+
+### References
+
+Che-Castaldo JP, Byrne A, Perišin K, Faust LJ. 2019. Sex-specific median life expectancies from ex situ populations for 330 animal species. Scientific Data. 6(1):190019. 
+
+Wickham H, Grolemund G. 2017. R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. 1st ed. O’Reilly Media, Inc. http://r4ds.had.co.nz.
+
 
 ## Session Information
 ```{r sessioninfo, echo=FALSE}
