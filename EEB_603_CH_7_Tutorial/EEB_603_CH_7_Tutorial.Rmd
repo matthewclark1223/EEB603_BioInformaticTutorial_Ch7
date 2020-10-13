@@ -474,19 +474,26 @@ quiz(
 Imagine you are the regional manager of Winco in Idaho. One thing you might want to do is combine the data from Boise and Idaho Falls. Let's start with data on how many customers visited each location, on each day in 2020. 
 
 ### Examine each dataset
-Start by looking at the Boise location and examine the dimensions.
+Start by looking at the Boise location and examine the dimensions. The dataset name is `Winco1`
 
 ```{r Win1, message=FALSE, warning=FALSE}
 Winco1<-read.csv("./Messy_CSVs/MergeData/WincoMerge1.csv")[,-1]
 ```
 
+
 ```{r win1L, exercise=TRUE}
 #Examine the Boise data set
-dim(Winco1) #look at the dimensions
-head(Winco1) #look at the first 6 rows
+ #look at the dimensions
+ #look at the first 6 rows
 ```
+:::{#win1L-hint}
+**Hint:** dim(Winco1)
 
-Then look at the Idaho Falls location and examine the dimensions of that dataset too
+head(Winco1)
+:::
+
+
+Then look at the Idaho Falls location and examine the dimensions of that dataset too. The name of this dataset is `Winco2`
 
 ```{r Win2, message=FALSE, warning=FALSE}
 Winco2<-read.csv("./Messy_CSVs/MergeData/WincoMerge2.csv")[,-1]
@@ -494,9 +501,15 @@ Winco2<-read.csv("./Messy_CSVs/MergeData/WincoMerge2.csv")[,-1]
 
 ```{r Win2L, exercise=TRUE}
 #Examine the Idaho Falls data set
-dim(Winco2) #look at the dimensions
-head(Winco2) #look at the first 6 rows
+ #look at the dimensions
+ #look at the first 6 rows
 ```
+:::{#Win2L-hint}
+**Hint:** dim(Winco2)
+
+head(Winco2)
+:::
+
 
 ### Merge with `rbind`
 We can see that these two datasets have the same number of columns and the same column names. This is the most simple way to merge data.
