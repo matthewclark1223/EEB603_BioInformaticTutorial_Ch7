@@ -1,15 +1,19 @@
 ---
 title: "Chapter 7 Tutorial: Tidying Your Data"
+author: Matt Clark & Jessica Bernardin
+date: October 20, 2020
 output: learnr::tutorial
 runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
+
 library(learnr)
 library(knitr)
 library(tidyverse)
 library(lubridate)
 library(readr)
+
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -31,11 +35,11 @@ The Rules of Tidy Data (Wickham & Grolemund 2016):
 
 Learners will be able to:
 
-  * convert data between two formats, long and wide.
-  * summarize, sort, and filter data using R.
+  * convert data between two formats, long and wide using the spread() and gather() functions.
+  * summarize, sort, and filter data using %>%, unite(), and select() functions.
   * create tidy data that has solutions for missing measurements.
   * merge data.
-  * format times and dates in datasets.
+  * format times and dates in datasets using the lubridate package.
 
 
 ### Timeline
@@ -65,7 +69,7 @@ Day 2
 Imagine your friend in a much cooler Biology department does some awesome research on cheetahs and what characteristics make them so super fast! They want to make you a co-author on this great cheetah paper if you can just make sense of the data. They send you the data and you decide to take a look.
 
 ```{r Cheetah1, message=FALSE, warning=FALSE}
-CheetahLong<-read.csv("./Messy_CSVs/Cheetas_long.csv")[,-1]
+CheetahLong<-read.csv(file = "Messy_CSVs/Cheetahs_long.csv")[,-1]
 ```
 
 ```{r Cheetah2, exercise=TRUE}
@@ -719,7 +723,7 @@ quiz(
 )
 ```
 
-### References
+## References
 
 Che-Castaldo JP, Byrne A, Perišin K, Faust LJ. 2019. Sex-specific median life expectancies from ex situ populations for 330 animal species. Scientific Data. 6(1):190019. 
 
