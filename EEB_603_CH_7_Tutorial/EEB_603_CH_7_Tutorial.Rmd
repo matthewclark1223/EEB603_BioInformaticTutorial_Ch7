@@ -33,13 +33,15 @@ The Rules of Tidy Data (Wickham & Grolemund 2016):
 
 ### Objectives
 
-Learners will be able to:
+Learners use coding exercises to practice making messy data tidy.  We have based each exercise on some sample data that is very messy, you will write code to tidy this data.  Hints for code are available by pressing the hint button below each exercise.
 
-  * convert data between two formats, long and wide using the spread() and gather() functions.
-  * summarize, sort, and filter data using %>%, unite(), and select() functions.
-  * create tidy data that has solutions for missing measurements.
-  * merge data.
-  * format times and dates in datasets using the lubridate package.
+At the end of this tutorial, students will be able to:
+
+  * convert data between two formats, long and wide using the `spread` and `gather` functions.
+  * summarize, sort, and filter data using pipes `%>%`, `unite`, and `select` functions.
+  * display, replace, and exclude missing data using `replace`, `is.na`, and `omit.na` functions.
+  * merge data using `rbind` and `merge`.
+  * format times and dates in datasets using the `lubridate` package.
 
 
 ### Timeline
@@ -48,15 +50,21 @@ Day 1
 
   * Introduction and Objectives
   
-  * Explore 3 Data Cleaning Topics
+  * Pivoting Data
+  
+  * Summarizing Data
+  
+  * Missing Data
   
   * Summary, Resources, Quiz
   
 Day 2
 
-  * Quick Review and Q&A
+  * Merging and Binding Data
   
-  * Explore 3 Advanced Cleaning Topics
+  * Dates
+  
+  * Times
   
   * Summary, Resources, Quiz
 
@@ -91,7 +99,7 @@ We want to make the data into wide format where `NumberSpots`, `MaxSpeed`, `Birt
 
 For this we can use the spread command, this is the complement to the gather command.  For this you identify the data, key (column with the variables), and the value (column with the value for each key).
 
-For example:  spread (datatable, key, value).  Now you try to write the code to pivot this data from long to wide format with each variable in an independent column.
+For example:  `spread (datatable, key, value)`.  Now you try to write the code to pivot this data from long to wide format with each variable in an independent column.
 
 ```{r Cheetah4, exercise=TRUE}
 #Spread CheetahLong, the key is Measurement, and the value is Value.
@@ -99,8 +107,10 @@ For example:  spread (datatable, key, value).  Now you try to write the code to 
 
 ```
 :::{#Cheetah4-hint}
-**Hint:** CheetahWide <- spread(CheetahLong, Measurement, Value)
-CheetahWide
+**Hint:** 
+`CheetahWide <- spread(CheetahLong, Measurement, Value)`
+
+`CheetahWide`
 :::
 
 Great Job!  Now each variable is presented in an independent column.  You can reverse this using the gather command, try it below.
@@ -114,14 +124,15 @@ CheetahWide <- spread(CheetahLong, Measurement, Value)
 
 ```
 :::{#Cheetah5-hint}
-**Hint:** gather(CheetahWide, Measurement, Value, 2:5)
+**Hint:** 
+`gather(CheetahWide, Measurement, Value, 2:5)`
 :::
 
 ## Day One: Summarizing Data
 
 This section will help you practice some of the basic commands to get summary information about your data.  You will also learn how to subset data in order to summary information on more manageable pieces of data.
 
-The following dataset shows some life history information on 330 zoo animals species found in North American zoos (Che-Castaldo et al. 2019
+The following dataset shows some life history information on 330 zoo animals species found in North American zoos (Che-Castaldo et al. 2019).
 
 
 ```{r zoo1, message=FALSE, warning=FALSE}
@@ -150,12 +161,16 @@ Sometimes it is helpful use the previous functions to put the dataset into conte
 So now that you see the dimensions and a glimpse at the start and end of the data, lets use some others.  In this next set, you get to practice with the code!
 
 ```{r zoo3, exercise=TRUE}
-#Look at the structure of the data (zoo).  Run the chunk to see the output.
+#Look at the structure of the data (zoo).  
+
+
+#Run the chunk to see the output.
 
 
 ```
 :::{#zoo3-hint}
-**Hint:** str(zoo)
+**Hint:** 
+`str(zoo)`
 :::
 
 ```{r zoo4, exercise=TRUE}
@@ -163,7 +178,8 @@ So now that you see the dimensions and a glimpse at the start and end of the dat
 
 ```
 :::{#zoo4-hint}
-**Hint:** summary(zoo)
+**Hint:** 
+`summary(zoo)`
 :::
 
 ```{r zoo5, exercise=TRUE}
@@ -172,7 +188,8 @@ So now that you see the dimensions and a glimpse at the start and end of the dat
 ```
 
 :::{#zoo5-hint}
-**Hint:** names(zoo)
+**Hint:** 
+`names(zoo)`
 :::
 
 Notice that the ID column and Sample column have parts of one unique sample identifier.  Lets unite these two columns and give the column a new name "Sample ID".
@@ -181,6 +198,7 @@ We can also pull just the mean life expectancy data out by excluding the columns
 
 Filtering the data will allow you to combine columns and exclude columns, if you need to tidy your data to be more refined.  In this next section we will combine two columns using "unite" and we will exclude data using "-".
 
+We can do multiple operations on one object by using the pipe operator `%>%`.  This is a used from the tidyverse package and can help to structure your arguments.
 
 ```{r zoo6, exercise=TRUE}
 #Filtering the data lets combine ID and Sample using the unite function.
@@ -194,7 +212,7 @@ zoo2 <- zoo %>%
   select(-7:-18)
 
 #We can use the names functions to see the new column names
-names(zoo2)
+  names(zoo2)
 
 ```
 
@@ -212,10 +230,11 @@ zoo2 %>% arrange(TaxonClass)
 #Output the summary of zoo to see how the data are arranged.
 ```
 :::{#zoo7-hint}
-**Hint:** summary(zoo2)
+**Hint:** 
+`summary(zoo2)`
 :::
 
-Now that we have the taxon groups organized, lets arrange the maximum life expectancy within each taxon. (arrange(primary order, secondary order))
+Now that we have the taxon groups organized, lets arrange the maximum life expectancy within each taxon. `arrange(primary order, secondary order)`
 
 ```{r zoo8-setup}
 zoo2 <- zoo %>%
@@ -231,13 +250,15 @@ zoo2 <- zoo %>%
 ```
 
 :::{#zoo8-hint}
-**Hint:** zoo2 %>% arrange(TaxonClass, Overall.MLE)
-summary(zoo2)
+**Hint:** 
+`zoo2 %>% arrange(TaxonClass, Overall.MLE)`
+
+`summary(zoo2)`
 :::
 
 Do you notice how the data is arranged now, ascending or descending? 
 
-Let's change the order from ascending MLE to descending using the - sign in front of `Overall.MLE`.
+Let's change the order from ascending MLE to descending using the `-` sign in front of `Overall.MLE`.
 
 ```{r zoo9-setup}
 zoo2 <- zoo %>%
@@ -250,19 +271,24 @@ zoo2 <- zoo %>%
 
 ```
 :::{#zoo9-hint}
-**Hint:** zoo2 %>% arrange(TaxonClass, -Overall.MLE)
-summary(zoo2)
+**Hint:** 
+`zoo2 %>% arrange(TaxonClass, -Overall.MLE)`
+
+`summary(zoo2)`
 :::
 
 Now our data is looking good!  
 
-There is one more tool we can use to practice summarizing our data.  We can analyze a subset of data.  We will name a variable zoomeanMLE and we will organize the data by taxon class and find the mean life expectancy for each group of animals.  
+There is one more tool we can use to practice summarizing our data.  We can analyze a subset of data.  We will name a variable `zoomeanMLE` and we will organize the data by taxon class and find the mean life expectancy for each group of animals.  
 
-Now there is a few pieces of missing data, we will remove these is na.rm=TRUE.  We will use this more in the next section but it will remove NA's and allow us to calculate the mean for each group.
+Now there is a few pieces of missing data, we will remove these is `na.rm=TRUE`.  We will use this more in the next section but it will remove NA's and allow us to calculate the mean for each group.
 
 First set your variable and the dataset.
-Then use a pipe, under which you will group the data by TaxonClass using group_by(columnname)
-Lastly, you can summarize the data using summarize(newcolumnname = function(values, na.rm = TRUE))
+
+Then use a pipe, under which you will group the data by `TaxonClass` using `group_by(columnname)`.
+
+Lastly, you can summarize the data using `summarize(newcolumnname = function(values, na.rm = TRUE))`
+
 ```{r zoo10-setup}
 zoo2 <- zoo %>%
   unite(Sample_ID, ID, Sample, sep="_") %>%
@@ -274,15 +300,17 @@ zoo2 <- zoo %>%
 
 ```
 :::{#zoo10-hint}
-**Hint:** zoomeanMLE <- zoo2 %>%
-    group_by(TaxonClass) %>%
-    summarize(mean_MLE = mean(Overall.MLE, na.rm = TRUE))
-zoomeanMLE
+**Hint:** 
+`zoomeanMLE <- zoo2 %>%`
+    `group_by(TaxonClass) %>%`
+    `summarize(mean_MLE = mean(Overall.MLE, na.rm = TRUE))`
+
+`zoomeanMLE`
 :::
 
-You might notice there is a NaN for Arachnida, this is because there is only one observation for this class and there is no MLE data for it.  Now we can see that those Chondrichthyes have the longest lifespan in captivity, GO SHARKS!!
+You might notice there is a `NaN` for Arachnida, this is because there is only one observation for this class and there is no MLE data for it.  Now we can see that those Chondrichthyes have the longest lifespan in captivity, GO SHARKS!!
 
-Also, note that the group_by() function will override previous groupings and might show a friendly warning message.
+Also, note that the `group_by()` function will override previous groupings and might show a friendly warning message.
 
 Great Job!  Now you can summarize, sort, and filter your data, these are great skills for tidying your data!
 
@@ -290,6 +318,7 @@ Great Job!  Now you can summarize, sort, and filter your data, these are great s
 ## Day One: Dealing with NA's
 
 Let's imagine that you're helping the health center out with some COVID-19 data analysis. They send you the data and you check it out.
+
 ```{r Covid1, message=FALSE, warning=FALSE}
 CovDat<-read.csv("./Messy_CSVs/COVID_NAs.csv")[,-1]
 ```
@@ -306,13 +335,14 @@ We can see a variety of different ways they have stored NAs!
 
 It look like there's: NA, nan and -999
 
-Another way to identify missing data is using is.na(data).  Try this out with our CovDat below.
+Another way to identify missing data is using `is.na(data)`.  Try this out with our `CovDat` below.
 
 ```{r covid3, exercise=TRUE}
 
 ```
 :::{#covid3-hint}
-**Hint:** is.na(CovDat)
+**Hint:** 
+`is.na(CovDat)`
 :::
 
 Missing data can be represented by:
@@ -321,26 +351,30 @@ Missing data can be represented by:
   * nan = not a number (impossible value)
   * -999 = missing data (impossible value)
  
-Sometimes the missing data isn't labeled as missing (na), it might just be absent.  This is called implicitly missing.
+Sometimes the missing data isn't labeled as missing `NA`, it might just be absent.  This is called implicitly missing.
   
 ```{r covid4, exercise=TRUE}
 #Let's replace the -999 with NA in our data set, type in the code below and see how it works.
 
 #CovDat[CovDat==-999] <- NA
+
+
 #CovDat
 
 
 ```
 :::{#covid4-hint}
-**Hint:** CovDat[CovDat==-999] <- NA
-CovDat
+**Hint:** 
+`CovDat[CovDat==-999] <- NA`
+
+`CovDat`
 :::
 
 Another way to replace missing or unwanted values is using `replace()` 
 
 For example if df was our data frame and we wanted to replace all the words that said missing with NA.
 
-df <- replace(df, df == "missing", NA)
+`df <- replace(df, df == "missing", NA)`
 
 Using our CovDat data, replace the characters NaN and values -999 with NA.
 
@@ -348,9 +382,12 @@ Using our CovDat data, replace the characters NaN and values -999 with NA.
 
 ```
 :::{#covid5-hint}
-**Hint:** CovDat <- replace(CovDat, CovDat == -999, NA)
-CovDat <- replace(CovDat, CovDat == "NaN", NA)
-CovDat
+**Hint:** 
+`CovDat <- replace(CovDat, CovDat == -999, NA)`
+
+`CovDat <- replace(CovDat, CovDat ==  "NaN", NA)`
+
+`CovDat`
 :::
 
 Sometimes missing data can throw a wrench in our analysis.  Use the space below to calculate the mean temperature from the CovDat (leaving NA in).
@@ -365,7 +402,8 @@ CovDat[CovDat==-999] <- NA
 
 ```
 :::{#covid6-hint}
-**Hint:** mean(CovDat$Temp)
+**Hint:** 
+`mean(CovDat$Temp)`
 :::
 
 What happened?  Let's try again taking care of those missing values.
@@ -380,10 +418,11 @@ CovDat[CovDat==-999] <- NA
 
 ```
 :::{#covid7-hint}
-**Hint:** mean(CovDat$Temp, na.rm=TRUE)
+**Hint:** 
+`mean(CovDat$Temp, na.rm=TRUE)`
 :::
 
-If you want to return a list of rows that have complete data you can use the complete.cases() function.  Using ! will return the observations with missing data.
+If you want to return a list of rows that have complete data you can use the `complete.cases()` function.  Using ! will return the observations with missing data.
 
 ```{r covid8-setup}
 CovDat[CovDat==-999] <- NA
@@ -397,11 +436,14 @@ CovDat[CovDat==-999] <- NA
 
 ```
 :::{#covid8-hint}
-**Hint:** CovDat[!complete.cases(CovDat),]
-CovDat
+**Hint:** 
+`CovDat[!complete.cases(CovDat),]`
+
+`CovDat`
 :::
 
-We can create an object with no missing data using na.omit().  Try this function in the space below.
+We can create an object with no missing data using `na.omit()`.  Try this function in the space below.
+
 ```{r covid9-setup}
 CovDat[CovDat==-999] <- NA
 ```
@@ -412,8 +454,10 @@ CovDat[CovDat==-999] <- NA
 
 ```
 :::{#covid9-hint}
-**Hint:** CovDatComplete <- na.omit(CovDat)
-CovDatComplete
+**Hint:** 
+`CovDatComplete <- na.omit(CovDat)`
+
+`CovDatComplete`
 :::
 
 Remember:  Sometimes pivoting data from long to wide format will reveal implicitly missing data.
@@ -421,6 +465,8 @@ Remember:  Sometimes pivoting data from long to wide format will reveal implicit
 ## Day One: Summary and Quiz
 
 ### Resources
+
+[Tidyverse Style Guide: PIPES](https://style.tidyverse.org/pipes.html)
 
 [Tidy Data Practice](https://garrettgman.github.io/tidying/)
 
